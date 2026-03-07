@@ -1,0 +1,7 @@
+.git
+.claude
+Home.pdf
+*.md
+Dockerfile
+docker-compose.yml
+.dockerignore
