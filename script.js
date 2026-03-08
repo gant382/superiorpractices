@@ -100,19 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData);
 
-            // Show success message
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.textContent;
-            btn.textContent = 'Message Sent!';
-            btn.style.background = 'linear-gradient(135deg, #059669 0%, #06b6d4 100%)';
-            btn.disabled = true;
+            const subject = encodeURIComponent('Contact from ' + (data.name || 'Website Visitor'));
+            const body = encodeURIComponent(
+                'Name: ' + (data.name || '') + '\n' +
+                'Email: ' + (data.email || '') + '\n' +
+                'Company: ' + (data.company || '') + '\n' +
+                'Industry: ' + (data.industry || '') + '\n\n' +
+                'Message:\n' + (data.message || '')
+            );
 
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-                btn.disabled = false;
-                contactForm.reset();
-            }, 3000);
+            window.location.href = 'mailto:ai@superiorpractices.com?subject=' + subject + '&body=' + body;
         });
     }
 
