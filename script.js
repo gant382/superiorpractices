@@ -59,15 +59,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const track2 = document.getElementById('marqueeTrack2');
     if (track1 && track2) {
         const totalLogos = 53;
-        const mid = Math.ceil(totalLogos / 2);
+        const extraLogos = ['assets/images/etisalat.png'];
+        const allLogos = [];
+        for (let i = 1; i <= totalLogos; i++) {
+            allLogos.push(`assets/images/page9_img${i}.png`);
+        }
+        allLogos.push(...extraLogos);
+        const mid = Math.ceil(allLogos.length / 2);
 
-        function populateTrack(track, start, end) {
+        function populateTrack(track, logos) {
             const fragment = document.createDocumentFragment();
             // Add logos twice for seamless loop
             for (let pass = 0; pass < 2; pass++) {
-                for (let i = start; i <= end; i++) {
+                for (const src of logos) {
                     const img = document.createElement('img');
-                    img.src = `assets/images/page9_img${i}.png`;
+                    img.src = src;
                     img.alt = 'Client logo';
                     img.loading = 'lazy';
                     img.onerror = function() { this.style.display = 'none'; };
@@ -77,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
             track.appendChild(fragment);
         }
 
-        populateTrack(track1, 1, mid);
-        populateTrack(track2, mid + 1, totalLogos);
+        populateTrack(track1, allLogos.slice(0, mid));
+        populateTrack(track2, allLogos.slice(mid));
     }
 
     // Try AI tab switching
